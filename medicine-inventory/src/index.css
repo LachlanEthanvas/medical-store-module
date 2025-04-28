@@ -59,6 +59,21 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Add a custom small button style */
+.btn-small {
+  font-size: 0.875rem; /* Smaller font size */
+  padding: 0.25rem 0.5rem; /* Adjust padding for a smaller button */
+  background-color: #3b82f6; 
+   /* Transparent background */
+  border: none; /* No border */
+  color: #ffffff; /* Blue color for the text */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

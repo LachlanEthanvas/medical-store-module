@@ -6,6 +6,7 @@ const MedicineInventory = () => {
   const todayDate = new Date().toISOString().split("T")[0];
   const [medicines, setMedicines] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [showAddCategory, setShowAddCategory] = useState(false);
   const [newMedicine, setNewMedicine] = useState({
     name: "",
     brand: "",
@@ -63,8 +64,9 @@ const MedicineInventory = () => {
         await axios.post("http://127.0.0.1:8000/api/categories/", { name: newCategory });
         fetchCategories(); // Refresh the categories list after adding the new category
         setNewCategory(""); // Reset the new category field
+        setShowAddCategory(false); // Hide the add category form after submission
       }
-
+  
       // Add the new medicine after potentially adding a new category
       await axios.post("http://127.0.0.1:8000/api/medicines/", newMedicine);
       fetchMedicines();
@@ -75,7 +77,7 @@ const MedicineInventory = () => {
       setLoading(false);
     }
   };
-
+  
   const handleUpdate = async () => {
     setLoading(true);
     setError("");
@@ -194,23 +196,43 @@ const MedicineInventory = () => {
                   </option>
                 ))}
               </select>
-            </div>
+             {/* Button to show/hide new category form */}
+<div className="flex flex-col mt-4">
+  <button
+    type="button"
+    className="btn-small w-8 h-8 flex items-center justify-center  "
+    onClick={() => setShowAddCategory(!showAddCategory)} // Toggle visibility
+  >
+    + 
+  </button>
 
-            {/* Option to add a new category */}
-            <div className="flex flex-col mt-4">
-              <label className="text-gray-600 font-medium mb-2" htmlFor="new-category">
-                Or Add New Category
-              </label>
-              <input
-                id="new-category"
-                type="text"
-                className="input bg-gray-300 border border-gray-300 rounded-lg py-2 px-4 w-full sm:w-64"
-                placeholder="Enter new category name"
-                value={newCategory}
-                onChange={(e) => setNewCategory(e.target.value)} // Set new category state
-              />
-            </div>
+  {/* Conditionally render the category form */}
+  {showAddCategory && (
+    <div className="flex flex-col mt-4">
+      <label className="text-gray-600 font-medium mb-2" htmlFor="new-category">
+        Enter New Category Name
+      </label>
+      <input
+        id="new-category"
+        type="text"
+        className="input bg-gray-300 border border-gray-300 rounded-lg py-2 px-4 w-full sm:w-64"
+        placeholder="Enter new category name"
+        value={newCategory}
+        onChange={(e) => setNewCategory(e.target.value)} // Set new category state
+      />
+      <button
+        type="button"
+        className="bg-green-500 text-white py-2 px-4 rounded-lg mt-4"
+        onClick={handleCreate} // Function to create category and add medicine
+      >
+        Submit Category
+      </button>
+    </div>
+  )}
+</div>
 
+            </div>
+            
             <div className="flex flex-col">
               <label className="block mb-2">Select Supplier:</label>
               <SupplierDropdown 
