@@ -9,6 +9,8 @@ import LoginForm from './components/supplier/supplierLogin';
 import Dashboard from './components/supplier/SupplierDashboard';
 import InvoiceForm from './components/invoice'; // Import InvoicePage
 import InvoiceList from './components/invoicelist'; // Import InvoiceList
+import RegisterStaff from './components/staffregistration';
+import StaffLogin from './components/loginstaff'; // Import StaffLogin
 
 
 function App() {
@@ -25,7 +27,8 @@ function App() {
           <Route path="/stock" element={<StockInventory />} />
           <Route path="/invoice" element={<InvoiceForm />} />
           <Route path="/invoicelist" element={< InvoiceList/>} />
-          
+          <Route path="/RegisterStaff" element={< RegisterStaff/>} />
+          <Route path="/StaffLogin" element={< StaffLogin/>} />
         </Routes>
       </div>
     </Router>

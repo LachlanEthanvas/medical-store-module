@@ -1,8 +1,8 @@
 from rest_framework import viewsets,status
 from .models import Medicine,Supplier,Category,Invoice, InvoiceItem
-from .serializers import MedicineSerializer,SupplierSerializer
+from .serializers import MedicineSerializer,SupplierSerializer,StaffRegisterSerializer
 
-
+from django.contrib.auth.models import User
 from .serializers import SupplierRegisterSerializer
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -124,3 +124,24 @@ def list_invoices(request):
     invoices = Invoice.objects.all().order_by('-date')  # latest first
     serializer = InvoiceSerializer(invoices, many=True)
     return Response(serializer.data)
+
+
+class StaffRegisterViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.filter(is_staff=True)
+    serializer_class = StaffRegisterSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Staff registered successfully"}, status=201)
+        return Response(serializer.errors, status=400)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def staff_profile(request):
+    return Response({
+        "username": request.user.username,
+        "name": request.user.first_name  # Add this if you use first_name
+    })

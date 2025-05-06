@@ -1,82 +1,101 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import axios from "axios";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [staffName, setStaffName] = useState("");
 
-  const toggleMenu = () => setMenuOpen(!menuOpen);
-  const closeMenu = () => setMenuOpen(false);
+  useEffect(() => {
+    const localName = localStorage.getItem("staff_name");
+    if (localName) {
+      setStaffName(localName);
+      return;
+    }
+  
+    const fetchStaffName = async () => {
+      const token = localStorage.getItem("access_token");
+      if (token) {
+        try {
+          const response = await axios.get("http://localhost:8000/api/staff/profile/", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setStaffName(response.data.username);
+          localStorage.setItem("staff_name", response.data.username);  // optional
+        } catch (error) {
+          console.error("Error fetching staff profile:", error);
+        }
+      }
+    };
+  
+    fetchStaffName();
+  }, []);
+  
 
   return (
-    <nav className="bg-blue-600 p-4 shadow-lg">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        {/* Logo */}
-        <Link to="/" className="text-white text-2xl font-bold">
-          City Square Cardio Clinic
-        </Link>
-
-        {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-6">
-          <Link to="/" className="text-white hover:text-gray-300">
-            Medicine Inventory
-          </Link>
-          <Link to="/stock" className="text-white hover:text-gray-300">
-            Stock Inventory
-          </Link>
-          <Link to="/register" className="text-white hover:text-gray-300">
-            Supplier Register
-          </Link>
-          <Link to="/login" className="text-white hover:text-gray-300">
-            Login
-          </Link>
-          <Link to="/dashboard" className="text-white hover:text-gray-300">
-            Dashboard
-          </Link>
-          <Link to="/invoice" className="text-white hover:text-gray-300">
-            invoice
-          </Link>
-          <Link to="/invoicelist" className="text-white hover:text-gray-300">
-            invoice list 
-          </Link>
-
+    <nav className="bg-blue-800 text-white py-2 shadow-md fixed w-full top-0 left-0 z-50">
+      <div className="flex justify-between items-center max-w-7xl mx-auto px-4">
+        {/* Logo and Hospital Name */}
+        <div className="flex items-center space-x-2">
+          <h1 className="text-xl font-semibold tracking-wide">CITY SQUARE CARDIO CLINIC</h1>
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden">
-          <button onClick={toggleMenu} className="text-white focus:outline-none">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+        {/* Display Staff Name if logged in */}
+        {staffName && (
+          <div className="mr-4 text-sm font-medium">
+            <span className="font-bold">{staffName}</span>
+          </div>
+        )}
+
+        {/* Hamburger Menu */}
+        <div className="relative">
+          <button
+            className="text-white text-3xl focus:outline-none transition-transform transform hover:scale-110"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <X size={32} /> : <Menu size={32} />}
           </button>
+
+          {/* Dropdown Menu */}
+          {menuOpen && (
+            <div className="absolute right-0 mt-2 w-44 bg-white text-gray-900 rounded-lg shadow-lg border border-gray-200 animate-fadeIn">
+              <ul className="flex flex-col text-lg font-medium">
+                {/* Add your links here as before */}
+                <li>
+                  <Link to="/" className="block px-5 py-3 hover:bg-blue-100" onClick={() => setMenuOpen(false)}>Home</Link>
+                </li>
+                <li>
+                  <Link to="/register" className="block px-5 py-3 hover:bg-blue-100" onClick={() => setMenuOpen(false)}>Supplier Register</Link>
+                </li>
+                <li>
+                  <Link to="/login" className="block px-5 py-3 hover:bg-blue-100" onClick={() => setMenuOpen(false)}>Supplier Login</Link>
+                </li>
+                <li>
+                  <Link to="/dashboard" className="block px-5 py-3 hover:bg-blue-100" onClick={() => setMenuOpen(false)}>Supplier Dashboard</Link>
+                </li>
+                <li>
+                  <Link to="/stock" className="block px-5 py-3 hover:bg-blue-100" onClick={() => setMenuOpen(false)}>Stock</Link>
+                </li>
+                <li>
+                  <Link to="/invoice" className="block px-5 py-3 hover:bg-blue-100" onClick={() => setMenuOpen(false)}>Invoice</Link>
+                </li>
+                <li>
+                  <Link to="/invoicelist" className="block px-5 py-3 hover:bg-blue-100" onClick={() => setMenuOpen(false)}>Invoice List</Link>
+                </li>
+                <li>
+                  <Link to="/RegisterStaff" className="block px-5 py-3 hover:bg-blue-100" onClick={() => setMenuOpen(false)}>Register Staff</Link>
+                </li>
+                <li>
+                  <Link to="/StaffLogin" className="block px-5 py-3 hover:bg-blue-100" onClick={() => setMenuOpen(false)}>Staff Login</Link>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
-
-      {/* Mobile Dropdown Menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-blue-700 text-white text-center flex flex-col py-2">
-          <Link to="/" className="py-2 hover:bg-blue-500" onClick={closeMenu}>
-            Medicine Inventory
-          </Link>
-          <Link to="/stock" className="py-2 hover:bg-blue-500" onClick={closeMenu}>
-            Stock Inventory
-          </Link>
-          <Link to="/register" className="py-2 hover:bg-blue-500" onClick={closeMenu}>
-            Supplier Register
-          </Link>
-          <Link to="/login" className="py-2 hover:bg-blue-500" onClick={closeMenu}>
-            Login
-          </Link>
-          <Link to="/dashboard" className="py-2 hover:bg-blue-500" onClick={closeMenu}>
-            Dashboard
-          </Link>
-        </div>
-      )}
     </nav>
   );
 };
