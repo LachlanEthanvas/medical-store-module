@@ -22,7 +22,7 @@ const RegisterStaff = () => {
       await axios.post('http://localhost:8000/api/staff/register/', formData);
       setMessage('Staff registered successfully!');
       setTimeout(() => {
-        navigate('/staff-login');
+        navigate('/stafflogin');
       }, 1500); 
     } catch (error) {
       console.error(error.response?.data);

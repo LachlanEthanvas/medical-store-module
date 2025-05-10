@@ -29,10 +29,13 @@ const StaffLogin = () => {
         },
       })
       .then((profileRes) => {
-        localStorage.setItem('staff_name', profileRes.data.username);
+  localStorage.setItem('staff_name', profileRes.data.username);
+  navigate('/');              // Navigate to inventory
+  setTimeout(() => {
+    window.location.reload();      // Force navbar update after a short delay
+  }, 100);
+})
 
-        navigate('/'); // Or wherever you want
-      })
       .catch((err) => {
         console.error("Profile fetch failed", err);
         navigate('/');
