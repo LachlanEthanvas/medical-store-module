@@ -23,6 +23,8 @@ const MedicineInventory = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [newCategory, setNewCategory] = useState(""); // State to hold the new category
+  const [errors, setErrors] = useState({});
+
 
   useEffect(() => {
     fetchMedicines();
@@ -56,6 +58,15 @@ const MedicineInventory = () => {
   };
 
   const handleCreate = async () => {
+
+    const errors = validateForm();
+    setErrors(errors);
+  if (Object.keys(errors).length > 0) {
+    // Handle errors (e.g., show error messages next to fields)
+    console.log(errors);
+    return; // Prevent form submission if validation fails
+  }
+
     setLoading(true);
     setError("");
     try {
@@ -79,6 +90,14 @@ const MedicineInventory = () => {
   };
   
   const handleUpdate = async () => {
+
+    const errors = validateForm();
+    setErrors(errors);
+  if (Object.keys(errors).length > 0) {
+    // Handle errors (e.g., show error messages next to fields)
+    console.log(errors);
+    return; // Prevent form submission if validation fails
+  }
     setLoading(true);
     setError("");
     try {
@@ -107,6 +126,39 @@ const MedicineInventory = () => {
       setLoading(false);
     }
   };
+
+  const validateForm = () => {
+  const errors = {};
+
+  // Medicine Name
+  if (!newMedicine.name.trim()) {
+    errors.name = "Medicine Name is required.";
+  }
+
+  // Brand
+  if (!newMedicine.brand.trim()) {
+    errors.brand = "Brand is required.";
+  }
+
+  // Price
+  if (!newMedicine.price || newMedicine.price <= 0) {
+    errors.price = "Price must be a positive number.";
+  }
+
+  // Expiry Date
+  const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
+  if (!newMedicine.expiry_date || newMedicine.expiry_date < today) {
+    errors.expiry_date = "Expiry Date must be a future date.";
+  }
+
+  // Stock Quantity
+  if (!newMedicine.stock_quantity || newMedicine.stock_quantity <= 0) {
+    errors.stock_quantity = "Stock Quantity must be a positive number.";
+  }
+
+  return errors;
+};
+
 
   // Function to reset the form
   const resetForm = () => {
@@ -155,6 +207,8 @@ const MedicineInventory = () => {
                 }
                 required
               />
+              {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+
             </div>
             <div className="flex flex-col">
               <label className="text-gray-600 font-medium mb-2" htmlFor="brand">
@@ -173,6 +227,7 @@ const MedicineInventory = () => {
                 }
                 required
               />
+              {errors.brand && <p className="text-red-500 text-sm">{errors.brand}</p>}
             </div>
             <div className="flex flex-col">
               <label className="text-gray-600 font-medium mb-2" htmlFor="category">
@@ -263,6 +318,7 @@ const MedicineInventory = () => {
                     : setNewMedicine({ ...newMedicine, description: e.target.value })
                 }
               />
+              
             </div>
             <div className="flex flex-col">
               <label className="text-gray-600 font-medium mb-2" htmlFor="price">
@@ -281,6 +337,7 @@ const MedicineInventory = () => {
                 }
                 required
               />
+               {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
             </div>
             <div className="flex flex-col">
               <label className="text-gray-600 font-medium mb-2" htmlFor="expiry_date">
@@ -299,6 +356,8 @@ const MedicineInventory = () => {
                 min={todayDate}
                 required
               />
+              {errors.expiry_date && <p className="text-red-500 text-sm">{errors.expiry_date}</p>}
+
             </div>
             <div className="flex flex-col">
               <label className="text-gray-600 font-medium mb-2" htmlFor="stock_quantity">
@@ -317,6 +376,7 @@ const MedicineInventory = () => {
                 }
                 required
               />
+              {errors.stock_quantity && <p className="text-red-500 text-sm">{errors.stock_quantity}</p>}
             </div>
             <div className="flex flex-col">
               <label className="text-gray-600 font-medium mb-2" htmlFor="dose">
