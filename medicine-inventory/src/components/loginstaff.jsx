@@ -48,9 +48,10 @@ const StaffLogin = () => {
   };
   
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center ">
       <form className="bg-white p-6 rounded shadow-lg w-80" onSubmit={handleLogin}>
         <h2 className="text-2xl mb-4 font-semibold">Staff Login</h2>
+        <label htmlFor="">Username:</label>
         <input
           type="text"
           placeholder="Username"
@@ -58,6 +59,7 @@ const StaffLogin = () => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
+        <label htmlFor="">Password:</label>
         <input
           type="password"
           placeholder="Password"

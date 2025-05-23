@@ -51,6 +51,7 @@ const SupplierRegisterForm = () => {
       {message && <p className="mb-3 text-red-500">{message}</p>}
 
       <form onSubmit={handleSubmit} className="space-y-3">
+        <label htmlFor="">Username:</label>
         <input
           type="text"
           name="username"
@@ -60,6 +61,7 @@ const SupplierRegisterForm = () => {
           required
           className="border p-2 w-full bg-white"
         />
+        <label htmlFor="">Email:</label>
         <input
           type="email"
           name="email"
@@ -69,6 +71,7 @@ const SupplierRegisterForm = () => {
           required
           className="border p-2 w-full bg-white"
         />
+        <label htmlFor="">Password:</label>
         <input
           type="password"
           name="password"
@@ -78,6 +81,7 @@ const SupplierRegisterForm = () => {
           required
           className="border p-2 w-full bg-white"
         />
+        <label htmlFor="">Address:</label>
         <textarea
           name="address"
           placeholder="Address"
@@ -86,6 +90,7 @@ const SupplierRegisterForm = () => {
           required
           className="border p-2 w-full bg-white"
         ></textarea>
+        <label htmlFor="">Contact number:</label>
         <input
           type="text"
           name="contact_number"
@@ -95,6 +100,7 @@ const SupplierRegisterForm = () => {
           required
           className="border p-2 w-full bg-white"
         />
+        <label htmlFor="">GST number:</label>
         <input
           type="text"
           name="gst"

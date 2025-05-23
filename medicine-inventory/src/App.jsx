@@ -18,9 +18,11 @@ function App() {
     <Router>
       <div className="App">
         <Navbar /> {/* Add Navbar component here */}
+       <br />
+       <br />
+       <br />
         <Routes>
           <Route path="/" element={<MedicineInventory />} />
-        
           <Route path="/register" element={<SupplierRegisterForm />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/dashboard" element={<Dashboard />} />

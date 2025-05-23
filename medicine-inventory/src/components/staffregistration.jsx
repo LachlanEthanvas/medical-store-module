@@ -34,10 +34,13 @@ const RegisterStaff = () => {
     <div className="max-w-md mx-auto mt-10 p-4 bg-white shadow rounded">
       <h2 className="text-xl font-bold mb-4">Register Staff</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
+        <label htmlFor="">Username:</label>
         <input type="text" name="username" placeholder="Username" className="w-full p-2 border rounded  bg-white"
           onChange={handleChange} required />
+          <label htmlFor="">Email:</label>
         <input type="email" name="email" placeholder="Email" className="w-full p-2 border rounded bg-white"
           onChange={handleChange} required />
+          <label htmlFor="">Password:</label>
         <input type="password" name="password" placeholder="Password" className="w-full p-2 border rounded bg-white"
           onChange={handleChange} required />
         <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Register</button>

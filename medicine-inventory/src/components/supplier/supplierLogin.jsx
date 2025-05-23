@@ -36,6 +36,7 @@ const LoginForm = () => {
       {message && <p className="mb-3 text-red-500">{message}</p>}
 
       <form onSubmit={handleSubmit} className="space-y-3">
+        <label htmlFor="">Username:</label>
         <input
           type="text"
           name="username"
@@ -45,6 +46,8 @@ const LoginForm = () => {
           required
           className="border p-2 w-full bg-white"
         />
+        
+        <label htmlFor="">Password:</label>
         <input
           type="password"
           name="password"
