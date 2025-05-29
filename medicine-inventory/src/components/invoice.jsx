@@ -64,10 +64,14 @@ const InvoiceForm = () => {
               th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
               th { background-color: #1E3A8A; color: white; }
               tfoot td { font-weight: bold; }
+           
+
+
             </style>
           </head>
           <body>
-            <h1>Invoice</h1>
+          <h1 style="text-align:center;">City Square Cardio Clinic </h1>
+            <h1 style="font-size: 26px;">Invoice</h1>
             <p><strong>Customer Name:</strong> ${customerName}</p>
             <p><strong>Contact:</strong> ${customerContact}</p>
             <table>
