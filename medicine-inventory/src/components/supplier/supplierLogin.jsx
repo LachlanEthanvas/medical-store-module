@@ -31,7 +31,7 @@ const LoginForm = () => {
 
   return (
     <div className="p-6 max-w-md mx-auto border rounded shadow-md">
-      <h2 className="text-xl font-bold mb-4">Login</h2>
+      <h2 className="text-xl font-bold mb-4">Supplier Login</h2>
 
       {message && <p className="mb-3 text-red-500">{message}</p>}
 

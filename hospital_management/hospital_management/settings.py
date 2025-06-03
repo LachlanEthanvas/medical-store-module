@@ -39,8 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'rest_framework',  
     'medicine',  
-    'corsheaders',
-    'supplier',  
+    'corsheaders', 
     'rest_framework_simplejwt',
 
 ]

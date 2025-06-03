@@ -49,7 +49,7 @@ const StaffLogin = () => {
   
   return (
     <div className="flex items-center justify-center ">
-      <form className="bg-white p-6 rounded shadow-lg w-80" onSubmit={handleLogin}>
+      <form className="bg-white p-10 rounded shadow-lg w-[500px]" onSubmit={handleLogin}>
         <h2 className="text-2xl mb-4 font-semibold">Staff Login</h2>
         <label htmlFor="">Username:</label>
         <input
