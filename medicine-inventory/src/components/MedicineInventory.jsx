@@ -56,7 +56,7 @@ const MedicineInventory = () => {
       setError("Error fetching categories");
     }
   };
-
+  
   const handleCreate = async () => {
 
     const errors = validateForm();
@@ -88,16 +88,36 @@ const MedicineInventory = () => {
       setLoading(false);
     }
   };
+
+  // Function to handle new a category creation
+  const handleCategoryCreate = async () => {
+
+    
+
+    setLoading(true);
+    setError("");
+    try {
+      if (newCategory) {
+        // If there's a new category, send it to the backend
+        await axios.post("http://127.0.0.1:8000/api/categories/", { name: newCategory });
+        fetchCategories(); // Refresh the categories list after adding the new category
+        setNewCategory(""); // Reset the new category field
+        setShowAddCategory(false); // Hide the add category form after submission
+      }
+  
+      
+      resetForm();
+    } catch (error) {
+      setError("Error creating medicine");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   
   const handleUpdate = async () => {
 
-    const errors = validateForm();
-    setErrors(errors);
-  if (Object.keys(errors).length > 0) {
-    // Handle errors (e.g., show error messages next to fields)
-    console.log(errors);
-    return; // Prevent form submission if validation fails
-  }
+ 
     setLoading(true);
     setError("");
     try {
@@ -113,6 +133,8 @@ const MedicineInventory = () => {
       setLoading(false);
     }
   };
+
+
 
   const handleDelete = async (id) => {
     setLoading(true);
@@ -176,7 +198,7 @@ const MedicineInventory = () => {
     });
   };
   return (
-    <div className="container p-6">
+    <div className="container ">
       <h1 className="text-3xl font-extrabold text-center text-gray-700 mb-6">
         Medicine Inventory
       </h1>
@@ -184,12 +206,12 @@ const MedicineInventory = () => {
       {/* Form for adding/editing medicines and list of medicines side by side */}
       <div className="flex flex-col lg:flex-row gap-10">
         {/* Add/Edit Medicine Form */}
-        <div className="bg-white border-r-4 border-black p-2 w-full lg:w-2/5">
+        <div className="bg-white border-r-4 border-black p-2 w-full lg:w-1/2">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">
             {editingMedicine ? "Edit Medicine" : "Add Medicine"}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <div className="flex flex-col">
               <label className="text-gray-600 font-medium mb-2" htmlFor="name">
                 Medicine Name <span className="text-red-500">*</span>
@@ -278,7 +300,7 @@ const MedicineInventory = () => {
       <button
         type="button"
         className="bg-green-500 text-white py-2 px-4 rounded-lg mt-4"
-        onClick={handleCreate} // Function to create category and add medicine
+        onClick={handleCategoryCreate} // Function to create category and add medicine
       >
         Submit Category
       </button>
@@ -286,10 +308,10 @@ const MedicineInventory = () => {
   )}
 </div>
 
-            </div>
+</div>
             
-            <div className="flex flex-col">
-              <label className="block mb-2">Select Supplier:</label>
+<div className="flex flex-col">
+ <label className="block mb-2">Select Supplier:</label>
               <SupplierDropdown 
   selectedSupplier={editingMedicine ? editingMedicine.supplier : newMedicine.supplier}
   onSelect={(supplierId) => {
@@ -447,7 +469,7 @@ const MedicineInventory = () => {
         </div>
 
         {/* List of Medicines */}
-        <div className="w-full lg:w-3/5">
+        <div className="w-full lg:w-1/2">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">Medicine List</h2>
           {loading ? (
             <p>Loading...</p>
@@ -474,16 +496,17 @@ const MedicineInventory = () => {
                       <td className="px-4 py-2">{medicine.price}</td>
                       <td className="px-4 py-2">
                         <button
-                          className="bg-yellow-500 text-white py-1 px-4 rounded-lg"
+                          className="bg-yellow-500 text-white text-sm py-1 px-2 rounded-md"
                           onClick={() => setEditingMedicine(medicine)}
                         >
-                          Edit
+                         ✏️ 
                         </button>
+                       
                         <button
-                          className="bg-red-500 text-white py-1 px-4 rounded-lg ml-2"
+                          className="bg-red-500  text-white text-sm py-1 px-2 rounded-md"
                           onClick={() => handleDelete(medicine.id)}
                         >
-                          Delete
+                         🗑️
                         </button>
                       </td>
                     </tr>

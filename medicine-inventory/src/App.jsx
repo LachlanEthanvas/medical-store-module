@@ -11,27 +11,33 @@ import InvoiceForm from './components/invoice/invoice'; // Import InvoiceForm
 import InvoiceList from './components/invoice/invoicelist'; // Import InvoiceList
 import RegisterStaff from './components/staff/staffregistration';
 import StaffLogin from './components/staff/loginstaff'; // Import StaffLogin
+import Sidebar from './components/sidebar'; // Import Sidebar if needed
 
 
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Navbar /> {/* Add Navbar component here */}
-       <br />
-       <br />
-       <br />
-        <Routes>
-          <Route path="/" element={<MedicineInventory />} />
-          <Route path="/register" element={<SupplierRegisterForm />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/stock" element={<StockInventory />} />
-          <Route path="/invoice" element={<InvoiceForm />} />
-          <Route path="/invoicelist" element={< InvoiceList/>} />
-          <Route path="/RegisterStaff" element={< RegisterStaff/>} />
-          <Route path="/StaffLogin" element={< StaffLogin/>} />
-        </Routes>
+      <div className="App flex">
+        <Sidebar /> {/* Sidebar on the left */}
+        <div className="ml-64 w-full">
+          <Navbar />
+          <br />
+          <br />
+          <br />
+          <div className="p-6">
+            <Routes>
+              <Route path="/" element={<MedicineInventory />} />
+              <Route path="/register" element={<SupplierRegisterForm />} />
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/stock" element={<StockInventory />} />
+              <Route path="/invoice" element={<InvoiceForm />} />
+              <Route path="/invoicelist" element={<InvoiceList />} />
+              <Route path="/RegisterStaff" element={<RegisterStaff />} />
+              <Route path="/StaffLogin" element={<StaffLogin />} />
+            </Routes>
+          </div>
+        </div>
       </div>
     </Router>
   );
